@@ -13,13 +13,13 @@ export const metadata: Metadata = {
   generator: "v0.app",
   icons: {
     icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/icon-dark-32x32.png", sizes: "32x32", type: "image/png", media: "(prefers-color-scheme: dark)" },
-      { url: "/icon-light-32x32.png", sizes: "32x32", type: "image/png", media: "(prefers-color-scheme: light)" },
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.png", type: "image/png" },
     ],
-    apple: "/apple-icon.png",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.png",
   },
-  metadataBase: new URL("https://wt01.knarglobal.com"),
+  metadataBase: new URL("https://wint01.knarglobal.com"),
   openGraph: {
     title: "Creep Damage Assessment - Knar Global",
     description: "Industrial equipment creep analysis configuration interface",
