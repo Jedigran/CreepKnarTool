@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server"
 
 const VALID_EQUIPMENT_IDS = ["D-100-01", "D-100-02", "D-100-03", "D-101-01", "L-101-01"]
-const WOLFRAM_UPLOAD_ENDPOINT = "https://www.wolframcloud.com/obj/knarcreepapp/upload-history"
+const WOLFRAM_UPLOAD_ENDPOINT = "https://www.wolframcloud.com/obj/jorgegranada0/upload-history"
 
 export async function POST(request: NextRequest) {
   try {
