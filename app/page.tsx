@@ -471,10 +471,10 @@ export default function CreepAnalysisConfig() {
                             type="number"
                             value={nominalThickness}
                             onChange={(e) => setNominalThickness(Number(e.target.value))}
-                            className="bg-card border-2 border-border text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20"
+                            className="bg-[#2d3748] border-2 border-border text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20 hover:bg-[#374151]"
                           />
                           <Select value={thicknessUnit} onValueChange={(v) => setThicknessUnit(v as "in" | "cm")}>
-                            <SelectTrigger className="w-24 bg-card border-2 border-border">
+                            <SelectTrigger className="w-24 bg-[#2d3748] border-2 border-border hover:bg-[#374151]">
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent className="bg-card border-2 border-border">
@@ -486,15 +486,14 @@ export default function CreepAnalysisConfig() {
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="percent-remaining">Refractory Remaining: {percentRemaining}%</Label>
+                        <Label>Refractory Remaining: {percentRemaining}%</Label>
                         <Slider
-                          id="percent-remaining"
                           value={[percentRemaining]}
                           onValueChange={(v) => setPercentRemaining(v[0])}
                           min={0}
                           max={100}
-                          step={10}
-                          className="py-4"
+                          step={5}
+                          className="w-full"
                         />
                       </div>
                     </div>
@@ -505,10 +504,10 @@ export default function CreepAnalysisConfig() {
                         <Input
                           id="thermal-k"
                           type="number"
-                          step="0.1"
+                          step="0.01"
                           value={thermalK}
                           onChange={(e) => setThermalK(Number(e.target.value))}
-                          className="bg-card border-2 border-border text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20"
+                          className="bg-[#2d3748] border-2 border-border text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20 hover:bg-[#374151]"
                         />
                       </div>
 
@@ -517,10 +516,9 @@ export default function CreepAnalysisConfig() {
                         <Input
                           id="h-ext"
                           type="number"
-                          step="0.1"
                           value={hExt}
                           onChange={(e) => setHExt(Number(e.target.value))}
-                          className="bg-card border-2 border-border text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20"
+                          className="bg-[#2d3748] border-2 border-border text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20 hover:bg-[#374151]"
                         />
                       </div>
 
@@ -531,7 +529,7 @@ export default function CreepAnalysisConfig() {
                           type="number"
                           value={ambientTemp}
                           onChange={(e) => setAmbientTemp(Number(e.target.value))}
-                          className="bg-card border-2 border-border text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20"
+                          className="bg-[#2d3748] border-2 border-border text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20 hover:bg-[#374151]"
                         />
                       </div>
                     </div>

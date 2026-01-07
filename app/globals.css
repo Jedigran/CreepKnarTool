@@ -123,13 +123,13 @@
   h6 {
     @apply font-serif;
   }
-  /* Enhanced visibility for input controls with subtle backgrounds */
+  /* Stronger base styles for ALL input elements with visible backgrounds */
   input[type="text"],
   input[type="number"],
   input[type="email"],
   select,
   textarea {
-    background-color: var(--input-background);
+    background-color: #2d3748 !important;
     border: 1px solid var(--border);
     transition: all 0.2s ease;
   }
@@ -139,7 +139,7 @@
   input[type="email"]:focus,
   select:focus,
   textarea:focus {
-    background-color: rgba(74, 85, 104, 0.3);
+    background-color: #374151 !important;
     border-color: var(--ring);
     outline: 2px solid rgba(255, 140, 66, 0.2);
   }
@@ -149,7 +149,7 @@
   input[type="email"]:hover,
   select:hover,
   textarea:hover {
-    background-color: rgba(74, 85, 104, 0.2);
+    background-color: #374151 !important;
     border-color: rgba(255, 140, 66, 0.4);
   }
 }
