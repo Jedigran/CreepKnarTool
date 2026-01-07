@@ -134,6 +134,9 @@ export default function CreepAnalysisConfig() {
   const [spotData, setSpotData] = useState(equipmentData["D-100-01"])
 
   const [historyPath, setHistoryPath] = useState<string>("")
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [uploadStatus, setUploadStatus] = useState<"idle" | "uploading" | "success" | "error">("idle")
+  const [uploadError, setUploadError] = useState<string>("")
   const [qualityFlags, setQualityFlags] = useState<string[]>([])
   const [windowHours, setWindowHours] = useState<number>(24)
 
@@ -170,6 +173,47 @@ export default function CreepAnalysisConfig() {
 
   const handleQualityFlagToggle = (flag: string) => {
     setQualityFlags((prev) => (prev.includes(flag) ? prev.filter((f) => f !== flag) : [...prev, flag]))
+  }
+
+  const handleFileUpload = async () => {
+    if (!selectedFile) {
+      setUploadError("Please select a file first")
+      setUploadStatus("error")
+      return
+    }
+
+    if (!selectedEquipment) {
+      setUploadError("Please select equipment before uploading")
+      setUploadStatus("error")
+      return
+    }
+
+    setUploadStatus("uploading")
+    setUploadError("")
+
+    try {
+      const formData = new FormData()
+      formData.append("file", selectedFile)
+      formData.append("equipmentID", selectedEquipment)
+
+      const response = await fetch("/api/data/upload", {
+        method: "POST",
+        body: formData,
+      })
+
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.error || "Upload failed")
+      }
+
+      // Store the datasetId returned from Wolfram Cloud
+      setHistoryPath(result.datasetId)
+      setUploadStatus("success")
+    } catch (error) {
+      setUploadError(error instanceof Error ? error.message : "Upload failed")
+      setUploadStatus("error")
+    }
   }
 
   const handleGenerateConfig = () => {
@@ -390,15 +434,50 @@ export default function CreepAnalysisConfig() {
                 <CardTitle className="text-2xl font-serif">Operational Data Configuration</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="space-y-2">
+                <div className="space-y-4">
                   <Label htmlFor="history-file">Temperature History File</Label>
-                  <Input
-                    id="history-file"
-                    type="file"
-                    onChange={(e) => setHistoryPath(e.target.files?.[0]?.name || "")}
-                    className="bg-[#2d3748] border-2 border-border text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20 hover:bg-[#374151] file:bg-accent file:text-accent-foreground file:border-0 file:mr-4 file:px-4 file:py-2 file:rounded"
-                  />
-                  {historyPath && <p className="text-sm text-muted-foreground">Selected: {historyPath}</p>}
+                  <div className="flex gap-3 items-start">
+                    <Input
+                      id="history-file"
+                      type="file"
+                      accept=".xlsx,.xls"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0] || null
+                        setSelectedFile(file)
+                        setUploadStatus("idle")
+                        setUploadError("")
+                      }}
+                      disabled={!selectedEquipment || uploadStatus === "uploading"}
+                      className="bg-[#2d3748] border-2 border-border text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20 hover:bg-[#374151] file:bg-accent file:text-accent-foreground file:border-0 file:mr-4 file:px-4 file:py-2 file:rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                    />
+                    <Button
+                      onClick={handleFileUpload}
+                      disabled={!selectedFile || !selectedEquipment || uploadStatus === "uploading"}
+                      className="bg-accent text-accent-foreground hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed min-w-[120px]"
+                    >
+                      {uploadStatus === "uploading" ? "Uploading..." : "Upload"}
+                    </Button>
+                  </div>
+
+                  {!selectedEquipment && (
+                    <p className="text-sm text-yellow-500">Please select equipment in Tab 1 before uploading</p>
+                  )}
+
+                  {selectedFile && uploadStatus === "idle" && (
+                    <p className="text-sm text-muted-foreground">Selected: {selectedFile.name}</p>
+                  )}
+
+                  {uploadStatus === "success" && historyPath && (
+                    <div className="p-3 bg-green-900/20 border border-green-600 rounded text-green-400 text-sm">
+                      Upload successful! Dataset ID: {historyPath}
+                    </div>
+                  )}
+
+                  {uploadStatus === "error" && uploadError && (
+                    <div className="p-3 bg-red-900/20 border border-red-600 rounded text-red-400 text-sm">
+                      Error: {uploadError}
+                    </div>
+                  )}
                 </div>
 
                 <div className="space-y-3">
