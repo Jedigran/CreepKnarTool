@@ -260,6 +260,36 @@ export default function CreepAnalysisConfig() {
     console.log(JSON.stringify(config, null, 2))
   }
 
+  const downloadExcelTemplate = () => {
+    if (!selectedEquipment) {
+      alert("Please select equipment first")
+      return
+    }
+
+    // Create a simple CSV that users can open in Excel
+    const sheetName = `VariablesOpera_${selectedEquipment}`
+    const csvContent = `Sheet Name: ${sheetName}
+
+Date,Time,Temperature_C,Pressure_kgcm2,QualityFlag
+2024-01-01,00:00:00,450.5,2.1,Good
+2024-01-01,01:00:00,455.2,2.15,Good
+2024-01-01,02:00:00,460.8,2.18,Good
+2024-01-01,03:00:00,465.3,2.22,Good
+2024-01-01,04:00:00,470.1,2.25,Good
+
+Note: This template shows the required format.
+- Create a sheet in your Excel file named exactly: ${sheetName}
+- Include columns: Date, Time, Temperature (°C), Pressure (kg/cm²), QualityFlag
+- Provide at least 2 rows of valid data
+- Avoid quality flags: Bad, Failed, I/O Timeout, IO Timeout, Scan Off`
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" })
+    const link = document.createElement("a")
+    link.href = URL.createObjectURL(blob)
+    link.download = `Template_${selectedEquipment}.csv`
+    link.click()
+  }
+
   const materialAPI = materialMapping[spotData.BaseMaterial] || spotData.BaseMaterial
   const lmpCoeffs = lmpCoefficients[materialAPI]?.[lmpType]
 
@@ -436,6 +466,30 @@ export default function CreepAnalysisConfig() {
               <CardContent className="space-y-6">
                 <div className="space-y-4">
                   <Label htmlFor="history-file">Temperature History File</Label>
+
+                  {selectedEquipment && (
+                    <div className="p-3 bg-blue-900/20 border border-blue-600 rounded text-blue-300 text-sm space-y-2">
+                      <p className="font-semibold">Excel File Requirements:</p>
+                      <ul className="list-disc list-inside space-y-1 ml-2">
+                        <li>
+                          File must contain a sheet named:{" "}
+                          <code className="bg-blue-950/50 px-1 py-0.5 rounded">VariablesOpera_{selectedEquipment}</code>
+                        </li>
+                        <li>Required columns: Date, Time, Temperature (°C), Pressure (kg/cm²), QualityFlag</li>
+                        <li>At least 2 valid data records required after quality filtering</li>
+                        <li>Avoid quality flags: Bad, Failed, I/O Timeout, IO Timeout, Scan Off</li>
+                      </ul>
+                      <Button
+                        onClick={downloadExcelTemplate}
+                        variant="outline"
+                        size="sm"
+                        className="mt-2 bg-blue-950/50 border-blue-600 text-blue-300 hover:bg-blue-900/40"
+                      >
+                        Download Template Guide
+                      </Button>
+                    </div>
+                  )}
+
                   <div className="flex gap-3 items-start">
                     <Input
                       id="history-file"
@@ -475,7 +529,14 @@ export default function CreepAnalysisConfig() {
 
                   {uploadStatus === "error" && uploadError && (
                     <div className="p-3 bg-red-900/20 border border-red-600 rounded text-red-400 text-sm">
-                      Error: {uploadError}
+                      <p className="font-semibold">Upload Failed:</p>
+                      <p>{uploadError}</p>
+                      {uploadError.includes("Upload failed") && (
+                        <p className="mt-2 text-xs">
+                          Common causes: Missing sheet "VariablesOpera_{selectedEquipment}", invalid data format, or
+                          insufficient valid records.
+                        </p>
+                      )}
                     </div>
                   )}
                 </div>
