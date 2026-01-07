@@ -283,7 +283,7 @@ export default function CreepAnalysisConfig() {
                   <Select value={selectedEquipment} onValueChange={handleEquipmentChange}>
                     <SelectTrigger
                       id="equipment-id"
-                      className="bg-card border-2 border-border text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20"
+                      className="bg-[#2d3748] border-2 border-border text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20 hover:bg-[#374151]"
                     >
                       <SelectValue placeholder="Select equipment..." />
                     </SelectTrigger>
@@ -396,7 +396,7 @@ export default function CreepAnalysisConfig() {
                     id="history-file"
                     type="file"
                     onChange={(e) => setHistoryPath(e.target.files?.[0]?.name || "")}
-                    className="bg-card border-2 border-border text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20"
+                    className="bg-[#2d3748] border-2 border-border text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20 hover:bg-[#374151] file:bg-accent file:text-accent-foreground file:border-0 file:mr-4 file:px-4 file:py-2 file:rounded"
                   />
                   {historyPath && <p className="text-sm text-muted-foreground">Selected: {historyPath}</p>}
                 </div>
@@ -425,7 +425,7 @@ export default function CreepAnalysisConfig() {
                   <Select value={String(windowHours)} onValueChange={(v) => setWindowHours(Number(v))}>
                     <SelectTrigger
                       id="window-hours"
-                      className="bg-card border-2 border-border text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20"
+                      className="bg-[#2d3748] border-2 border-border text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20 hover:bg-[#374151]"
                     >
                       <SelectValue />
                     </SelectTrigger>
@@ -551,7 +551,7 @@ export default function CreepAnalysisConfig() {
                     <Select value={analysisSTD} onValueChange={setAnalysisSTD}>
                       <SelectTrigger
                         id="analysis-std"
-                        className="bg-card border-2 border-border text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20"
+                        className="bg-[#2d3748] border-2 border-border text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20 hover:bg-[#374151]"
                       >
                         <SelectValue />
                       </SelectTrigger>
@@ -737,7 +737,7 @@ export default function CreepAnalysisConfig() {
                   <Select value={String(trackingMode)} onValueChange={(v) => setTrackingMode(Number(v))}>
                     <SelectTrigger
                       id="tracking-mode"
-                      className="bg-card border-2 border-border text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20 max-w-xs"
+                      className="bg-[#2d3748] border-2 border-border text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20 hover:bg-[#374151]"
                     >
                       <SelectValue />
                     </SelectTrigger>
