@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
 
     console.log("[v0] Uploading to Wolfram Cloud:", { fileName, equipmentID })
 
-    // Forward to Wolfram Cloud API
+    // Forward to Wolfram Cloud API. 
     const wolframResponse = await fetch(WOLFRAM_UPLOAD_ENDPOINT, {
       method: "POST",
       body: wolframFormData,
