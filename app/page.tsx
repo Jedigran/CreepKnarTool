@@ -468,12 +468,28 @@ Note: This template shows the required format.
                   <Label htmlFor="history-file">Temperature History File</Label>
 
                   {selectedEquipment && (
-                    <div className="p-3 bg-blue-900/20 border border-blue-600 rounded text-blue-300 text-sm space-y-2">
-                      <p className="font-semibold">Excel File Requirements:</p>
-                      <ul className="list-disc list-inside space-y-1 ml-2">
+                    <div className="p-4 bg-card/50 border-2 border-primary/40 rounded-lg text-foreground text-sm space-y-3">
+                      <p className="font-semibold text-primary flex items-center gap-2">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        Excel File Requirements:
+                      </p>
+                      <ul className="list-disc list-inside space-y-1.5 ml-2">
                         <li>
                           File must contain a sheet named:{" "}
-                          <code className="bg-blue-950/50 px-1 py-0.5 rounded">VariablesOpera_{selectedEquipment}</code>
+                          <code className="bg-muted px-2 py-0.5 rounded text-primary font-mono text-xs">
+                            VariablesOpera_{selectedEquipment}
+                          </code>
                         </li>
                         <li>Required columns: Date, Time, Temperature (°C), Pressure (kg/cm²), QualityFlag</li>
                         <li>At least 2 valid data records required after quality filtering</li>
@@ -483,15 +499,23 @@ Note: This template shows the required format.
                         onClick={downloadExcelTemplate}
                         variant="outline"
                         size="sm"
-                        className="mt-2 bg-blue-950/50 border-blue-600 text-blue-300 hover:bg-blue-900/40"
+                        className="mt-2 bg-muted border-2 border-primary/40 text-primary hover:bg-primary/10 hover:border-primary"
                       >
                         Download Template Guide
                       </Button>
                     </div>
                   )}
 
-                  <div className="flex gap-3 items-start">
-                    <Input
+                  <div className="flex gap-3 items-stretch">
+                    <label
+                      htmlFor="history-file"
+                      className={`bg-accent text-accent-foreground hover:bg-accent/90 px-6 py-2.5 rounded cursor-pointer inline-flex items-center justify-center font-medium text-base transition-colors ${
+                        !selectedEquipment || uploadStatus === "uploading" ? "opacity-50 cursor-not-allowed" : ""
+                      }`}
+                    >
+                      Choose File
+                    </label>
+                    <input
                       id="history-file"
                       type="file"
                       accept=".xlsx,.xls"
@@ -502,12 +526,15 @@ Note: This template shows the required format.
                         setUploadError("")
                       }}
                       disabled={!selectedEquipment || uploadStatus === "uploading"}
-                      className="bg-[#2d3748] border-2 border-border text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20 hover:bg-[#374151] file:bg-accent file:text-accent-foreground file:border-0 file:mr-4 file:px-4 file:py-2 file:rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="hidden"
                     />
+                    <div className="flex-1 bg-[#2d3748] border-2 border-border rounded px-4 py-2.5 flex items-center text-foreground">
+                      {selectedFile ? selectedFile.name : "No file chosen"}
+                    </div>
                     <Button
                       onClick={handleFileUpload}
                       disabled={!selectedFile || !selectedEquipment || uploadStatus === "uploading"}
-                      className="bg-accent text-accent-foreground hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed min-w-[120px]"
+                      className="bg-accent text-accent-foreground hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed min-w-[120px] px-6 py-2.5 text-base font-medium"
                     >
                       {uploadStatus === "uploading" ? "Uploading..." : "Upload"}
                     </Button>
