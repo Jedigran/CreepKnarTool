@@ -24,6 +24,8 @@
   --border: #4a5568;
   --input: #4a5568;
   --ring: #ff8c42;
+  /* Added subtle input background for better visibility */
+  --input-background: #2d3748; /* Slightly lighter than background */
   --radius: 0.5rem;
 }
 
@@ -85,6 +87,8 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  /* Added input background color token */
+  --color-input-background: var(--input-background);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -118,5 +122,34 @@
   h5,
   h6 {
     @apply font-serif;
+  }
+  /* Enhanced visibility for input controls with subtle backgrounds */
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  select,
+  textarea {
+    background-color: var(--input-background);
+    border: 1px solid var(--border);
+    transition: all 0.2s ease;
+  }
+
+  input[type="text"]:focus,
+  input[type="number"]:focus,
+  input[type="email"]:focus,
+  select:focus,
+  textarea:focus {
+    background-color: rgba(74, 85, 104, 0.3);
+    border-color: var(--ring);
+    outline: 2px solid rgba(255, 140, 66, 0.2);
+  }
+
+  input[type="text"]:hover,
+  input[type="number"]:hover,
+  input[type="email"]:hover,
+  select:hover,
+  textarea:hover {
+    background-color: rgba(74, 85, 104, 0.2);
+    border-color: rgba(255, 140, 66, 0.4);
   }
 }
