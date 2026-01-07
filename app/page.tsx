@@ -58,8 +58,8 @@ interface AnalysisConfig {
 const equipmentData = {
   "D-100-01": {
     BaseMaterial: "Low Carbon Steel",
-    OuterDiameterM: 3.048,
-    WallThicknessM: 0.0127,
+    OuterDiameterM: 3.5433,
+    WallThicknessM: 0.019,
     DesignPressureMPa: 0.345,
     DesignTemperatureC: 538,
     UseRefractory: true,
@@ -68,8 +68,8 @@ const equipmentData = {
   },
   "D-100-02": {
     BaseMaterial: "ASTM A240 304H",
-    OuterDiameterM: 3.048,
-    WallThicknessM: 0.0095,
+    OuterDiameterM: 3.5433,
+    WallThicknessM: 0.0127,
     DesignPressureMPa: 0.345,
     DesignTemperatureC: 538,
     UseRefractory: true,
@@ -78,8 +78,8 @@ const equipmentData = {
   },
   "D-100-03": {
     BaseMaterial: "Low Carbon Steel",
-    OuterDiameterM: 3.048,
-    WallThicknessM: 0.0127,
+    OuterDiameterM: 3.5433,
+    WallThicknessM: 0.0159,
     DesignPressureMPa: 0.345,
     DesignTemperatureC: 538,
     UseRefractory: true,
@@ -173,6 +173,8 @@ export default function CreepAnalysisConfig() {
   }
 
   const handleGenerateConfig = () => {
+    const activeScenarios = scenarios.filter((s) => s.Active)
+
     const config: AnalysisConfig = {
       AnalysisSPOT: {
         ID: selectedEquipment || "D-100-01",
@@ -205,7 +207,7 @@ export default function CreepAnalysisConfig() {
       },
       Scenarios: {
         HorizonYears: horizonYears,
-        Future: scenarios,
+        Future: activeScenarios,
       },
       TrackingMode: trackingMode,
     }
